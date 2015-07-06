@@ -19,10 +19,12 @@ app.get('/', function (req, res){
 	request(String(url_query), function(error, response, html){
 		if (!error) {
 
-			scraper.scrape_metadata(html);
-			scraper.scrape_html(html);
+			result = scraper.scrape_metadata(html);
 
-			res.end("Ok")
+			if(!result)
+				result = scraper.scrape_html(html);
+
+			res.json(result)
 
 		} else {
 			console.log(error);
