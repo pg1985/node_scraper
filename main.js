@@ -19,11 +19,14 @@ app.get('/', function (req, res){
 	request(String(url_query), function(error, response, html){
 		if (!error) {
 
+			//attempt to scrape metadata.  Returns a dict if true, 'false' if no metadata on the webpage.
 			result = scraper.scrape_metadata(html);
 
+			//if no metadata, scrape teh HTML as a fallback
 			if(!result)
 				result = scraper.scrape_html(html);
 
+			//return the json object.
 			res.json(result)
 
 		} else {
